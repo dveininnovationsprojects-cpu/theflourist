@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>The Florist | Login / Sign Up</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <style>
+        /* CSS: Core Styles & Custom Animations (Common) */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .animate-fadeIn { animation: fadeIn 1.5s ease-out; }
+        #menu-toggle:checked ~ #mobile-menu { transform: translateX(0); }
+
+        /* Custom Colors from Prompt */
+        .color-primary { color: #D1A3A4; } /* Muted Rose Pink */
+        .bg-primary { background-color: #D1A3A4; }
+        .color-accent { color: #B49B6E; } /* Goldenrod Accent */
+        .bg-accent { background-color: #B49B6E; }
+        .bg-background-light { background-color: #F8F6F2; }
+        .bg-background-dark { background-color: #1A1A1A; }
+
+        /* Tab switching CSS for clean UI */
+        #register-tab:checked ~ #register-panel,
+        #login-tab:checked ~ #login-panel { display: block; }
+
+        #register-panel, #login-panel { display: none; }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D1A3A4", /* Muted Rose Pink */
+                        "background-light": "#F8F6F2",
+                        "background-dark": "#1A1A1A",
+                        "text-light": "#333333",
+                        "text-dark": "#F8F6F2",
+                        "accent": "#B49B6E" /* Goldenrod Accent */
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative w-full overflow-x-hidden">
+
+    <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-black/10 dark:border-white/10 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md px-6 md:px-10 lg:px-20 py-4">
+        <div class="flex items-center gap-4 text-text-light dark:text-text-dark">
+            <div class="text-3xl text-primary"><span class="material-symbols-outlined">local_florist</span></div>
+            <h2 class="text-xl font-bold tracking-[-0.015em] font-serif">The Florist</h2>
+        </div>
+        
+        <nav class="hidden md:flex flex-1 justify-center gap-9">
+            <a class="text-sm font-medium hover:text-accent transition duration-300" href="index.html">Home</a>
+            <a class="text-sm font-medium hover:text-accent transition duration-300" href="shop.html">Bouquets</a>
+            <a class="text-sm font-bold text-accent transition duration-300" href="auth.html">Account</a>
+            <a class="text-sm font-medium hover:text-accent transition duration-300" href="orders.html">My Orders</a>
+            <a class="text-sm font-medium hover:text-accent transition duration-300" href="about.html">About</a>
+        </nav>
+        
+        <div class="flex items-center gap-2">
+            <a href="auth.html" class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full hover:bg-primary/10 dark:hover:bg-white/5 transition duration-300">
+                <span class="material-symbols-outlined">person</span>
+            </a>
+            <a href="cart.html" class="relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-primary/20 text-primary hover:bg-primary transition duration-300 hover:text-white">
+                <span class="material-symbols-outlined">shopping_bag</span>
+                <span class="absolute top-1 right-1 block h-2 w-2 rounded-full bg-accent animate-pulse"></span>
+            </a>
+            
+            <input type="checkbox" id="menu-toggle" class="sr-only">
+            <label for="menu-toggle" class="md:hidden flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition duration-300">
+                <span class="material-symbols-outlined">menu</span>
+            </label>
+        </div>
+    </header>
+
+    <nav id="mobile-menu" class="fixed inset-y-0 right-0 z-40 w-64 bg-background-light dark:bg-background-dark border-l border-black/10 dark:border-white/10 p-6 shadow-xl transform translate-x-full transition-transform duration-300 md:hidden">
+        <div class="flex flex-col gap-4 pt-12">
+            <a class="text-lg font-medium hover:text-accent transition duration-300" href="index.html">Home</a>
+            <a class="text-lg font-medium hover:text-accent transition duration-300" href="shop.html">Bouquets</a>
+            <a class="text-lg font-bold text-accent transition duration-300" href="auth.html">Account</a>
+            <a class="text-lg font-medium hover:text-accent transition duration-300" href="orders.html">My Orders</a>
+            <a class="text-lg font-medium hover:text-accent transition duration-300" href="about.html">About</a>
+        </div>
+    </nav>
+
+    <main class="max-w-xl mx-auto flex-grow px-6 md:px-10 lg:px-20 py-12 sm:py-24 animate-fadeIn">
+        <div class="bg-background-light dark:bg-background-dark/50 p-8 sm:p-12 rounded-xl shadow-2xl border border-primary/20">
+            <h1 class="text-3xl font-serif font-bold tracking-[-0.033em] text-text-light dark:text-text-dark mb-8 text-center">Access Your Account</h1>
+            
+            <div class="flex justify-center mb-8 border-b border-primary/50">
+                <input type="radio" id="login-tab" name="auth-tabs" class="sr-only" checked>
+                <label for="login-tab" class="px-6 py-3 cursor-pointer text-lg font-medium hover:text-primary transition-colors duration-300 border-b-2 border-transparent has-[:checked]:border-primary has-[:checked]:text-primary">Login</label>
+                
+                <input type="radio" id="register-tab" name="auth-tabs" class="sr-only">
+                <label for="register-tab" class="px-6 py-3 cursor-pointer text-lg font-medium hover:text-primary transition-colors duration-300 border-b-2 border-transparent has-[:checked]:border-primary has-[:checked]:text-primary">Sign Up</label>
+            </div>
+
+            <div id="login-panel">
+                <form class="space-y-6">
+                    <div>
+                        <label for="login-email" class="block text-sm font-medium mb-1">Email Address</label>
+                        <input type="email" id="login-email" class="w-full rounded-lg border-primary/30 bg-background-light dark:bg-background-dark/80 text-text-light dark:text-text-dark focus:ring-accent focus:border-accent" placeholder="you@example.com" required>
+                    </div>
+                    <div>
+                        <label for="login-password" class="block text-sm font-medium mb-1">Password</label>
+                        <input type="password" id="login-password" class="w-full rounded-lg border-primary/30 bg-background-light dark:bg-background-dark/80 text-text-light dark:text-text-dark focus:ring-accent focus:border-accent" placeholder="••••••••" required>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-primary/30 text-primary focus:ring-primary">
+                            <label for="remember-me" class="ml-2 block text-sm">Remember me</label>
+                        </div>
+                        <a href="#" class="text-sm font-medium text-primary hover:text-accent transition duration-300">Forgot Password?</a>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex items-center justify-center rounded-full h-12 px-8 bg-accent text-white text-base font-bold leading-normal tracking-[0.015em] transition-opacity hover:opacity-90 duration-300">
+                            Log In
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="register-panel">
+                <form class="space-y-6">
+                    <div>
+                        <label for="register-name" class="block text-sm font-medium mb-1">Full Name</label>
+                        <input type="text" id="register-name" class="w-full rounded-lg border-primary/30 bg-background-light dark:bg-background-dark/80 text-text-light dark:text-text-dark focus:ring-accent focus:border-accent" placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="register-email" class="block text-sm font-medium mb-1">Email Address</label>
+                        <input type="email" id="register-email" class="w-full rounded-lg border-primary/30 bg-background-light dark:bg-background-dark/80 text-text-light dark:text-text-dark focus:ring-accent focus:border-accent" placeholder="you@example.com" required>
+                    </div>
+                    <div>
+                        <label for="register-password" class="block text-sm font-medium mb-1">Password</label>
+                        <input type="password" id="register-password" class="w-full rounded-lg border-primary/30 bg-background-light dark:bg-background-dark/80 text-text-light dark:text-text-dark focus:ring-accent focus:border-accent" placeholder="Min. 8 characters" required>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex items-center justify-center rounded-full h-12 px-8 bg-accent text-white text-base font-bold leading-normal tracking-[0.015em] transition-opacity hover:opacity-90 duration-300">
+                            Create Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="mt-8 text-center text-sm">
+                <p>Authentication is for UI/UX demonstration only. No backend logic implemented.</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="bg-black/5 dark:bg-white/5 text-text-light/80 dark:text-text-dark/80 px-6 md:px-10 lg:px-20 py-16 mt-16">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="md:col-span-2">
+                <h3 class="text-lg font-bold text-text-light dark:text-text-dark mb-4">Contact Us</h3>
+                <p class="text-sm mb-2">127 1/398, Near Nilgiris & Ganga Sweets, Rajiv Gandhi Salai, OMR, Navalur, Chennai 603 113</p>
+                <p class="text-sm mb-1">Phone: 044-35353222, +91 99400 25345</p>
+                <p class="text-sm">Email: sales@theflorist.co.in</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-text-light dark:text-text-dark mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a class="hover:text-primary transition duration-300" href="shop.html">Bouquets</a></li>
+                    <li><a class="hover:text-primary transition duration-300" href="auth.html">My Account</a></li>
+                    <li><a class="hover:text-primary transition duration-300" href="orders.html">Order History</a></li>
+                    <li><a class="hover:text-primary transition duration-300" href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-text-light dark:text-text-dark mb-4">Follow Us</h3>
+                <div class="flex items-center gap-4">
+                    <a class="hover:text-accent transition duration-300" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zM12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44c0-.795-.645-1.44-1.441-1.44z"/></svg></a>
+                    <a class="hover:text-accent transition duration-300" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg></a>
+                    <a class="hover:text-accent transition duration-300" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.298 1.634 4.212 3.793 4.649-.65.177-1.336.213-2.033.16.586 1.913 2.344 3.217 4.422 3.255-1.728 1.345-3.837 2.088-6.04 1.88-1.893.121-3.837-.404-5.553-1.254 2.116 1.345 4.649 2.132 7.373 2.132 8.771 0 13.59-7.277 13.59-13.59 0-.205-.005-.41-.013-.615.932-.67 1.733-1.512 2.37-2.459z"/></svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-xs mt-12 border-t border-black/10 dark:border-white/10 pt-8">
+            <p>© 2024 The Florist. All Rights Reserved. | Product subject to change as per availability.</p>
+        </div>
+    </footer>
+</div>
+
+<!-- Mobile Menu + Chatbot -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const btn = document.querySelector('[data-mobile-toggle]');
+  const menu = document.querySelector('[data-mobile-menu]');
+  if(btn && menu){
+    btn.addEventListener('click', ()=> menu.classList.toggle('hidden'));
+  }
+  // Chatbot
+  const botBtn = document.createElement('button');
+  botBtn.textContent="💬";
+  botBtn.style.cssText="position:fixed;bottom:20px;right:20px;padding:10px;border-radius:50%;background:#ff69b4;color:#fff;font-size:20px;z-index:9999;";
+  document.body.appendChild(botBtn);
+  const box=document.createElement('div');
+  box.style.cssText="position:fixed;bottom:80px;right:20px;width:280px;height:360px;background:#fff;border:1px solid #ddd;border-radius:10px;display:none;flex-direction:column;overflow:hidden;z-index:9999;";
+  box.innerHTML='<div style="background:#ff69b4;color:#fff;padding:8px;">Florist Assistant</div><div id="cb" style="flex:1;padding:8px;overflow:auto;font-size:14px;"></div><div style="padding:6px;display:flex;gap:4px;"><input id="ci" style="flex:1;border:1px solid #ccc;padding:4px;border-radius:6px;"><button id="cs" style="padding:4px 8px;background:#ff69b4;color:#fff;border:none;border-radius:6px;">Send</button></div>';
+  document.body.appendChild(box);
+  botBtn.onclick=()=> box.style.display= box.style.display==="none"?"flex":"none";
+  function reply(t){document.getElementById("cb").innerHTML+=`<div style="margin:4px 0;color:#555;">${t}</div>`;}
+  document.getElementById("cs")?.addEventListener("click", ()=>{
+    let v=document.getElementById("ci").value.trim(); if(!v)return;
+    reply("You: "+v); document.getElementById("ci").value="";
+    reply("Bot: Thanks for reaching out! We’ll help you with bouquets, deliveries, and custom floral arrangements 🌸");
+  });
+});
+</script>
+
+</body>
+</html>

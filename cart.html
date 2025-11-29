@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>The Florist | Your Shopping Bag</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <style>
+        /* CSS: Core Styles & Custom Animations (Same as index.html) */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseBorder { 0%, 100% { box-shadow: 0 0 0 0 rgba(209, 163, 164, 0.7); } 50% { box-shadow: 0 0 0 10px rgba(209, 163, 164, 0); } }
+
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        /* Animation Classes */
+        .animate-fadeIn { animation: fadeIn 1.5s ease-out; }
+        .animate-cta:hover { transform: scale(1.02); }
+        .animate-pulseBorder { animation: pulseBorder 2s infinite; }
+
+        /* Mobile Menu Fix */
+        #menu-toggle:checked ~ #mobile-menu { transform: translateX(0); }
+        
+        /* Custom Colors from Prompt */
+        .color-primary { color: #D1A3A4; } /* Muted Rose Pink */
+        .bg-primary { background-color: #D1A3A4; }
+        .color-accent { color: #B49B6E; } /* Goldenrod Accent */
+        .bg-accent { background-color: #B49B6E; }
+        .bg-background-light { background-color: #F8F6F2; }
+        .bg-background-dark { background-color: #1A1A1A; }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D1A3A4", /* Muted Rose Pink */
+                        "background-light": "#F8F6F2",
+                        "background-dark": "#1A1A1A",
+                        "text-light": "#333333",
+                        "text-dark": "#F8F6F2",
+                        "accent": "#B49B6E" /* Goldenrod Accent */
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative w-full overflow-x-hidden">
+
+    <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-black/10 dark:border-white/10 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md px-6 md:px-10 lg:px-20 py-4">
+        <div class="flex items-center gap-4 text-text-light dark:text-text-dark">
+            <div class="text-3xl text-primary"><span class="material-symbols-outlined">local_florist</span></div>
+            <h2 class="text-xl font-bold tracking-[-0.015em] font-serif">The Florist</h2>
+        </div>
+        
+        <nav class="hidden md:flex flex-1 justify-center gap-9">
+            <a class="text-sm font-medium hover:text-accent transition duration-300" href="index.html">Home</a>
+            <a class="text-sm font-medium hover:text-accent transition duration-300" href="shop.html">Bouquets</a>
+            <a class="text-sm font-medium hover:text-accent transition duration-300" href="auth.html">Account</a>
+            <a class="text-sm font-medium hover:text-accent transition duration-300" href="orders.html">My Orders</a>
+            <a class="text-sm font-medium hover:text-accent transition duration-300" href="about.html">About</a>
+        </nav>
+        
+        <div class="flex items-center gap-2">
+            <a href="auth.html" class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full hover:bg-primary/10 dark:hover:bg-white/5 transition duration-300">
+                <span class="material-symbols-outlined">person</span>
+            </a>
+            <a href="cart.html" class="relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-primary/20 text-primary hover:bg-primary transition duration-300 hover:text-white">
+                <span class="material-symbols-outlined">shopping_bag</span>
+                <span class="absolute top-1 right-1 block h-2 w-2 rounded-full bg-accent animate-pulse"></span>
+            </a>
+            
+            <input type="checkbox" id="menu-toggle" class="sr-only">
+            <label for="menu-toggle" class="md:hidden flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition duration-300">
+                <span class="material-symbols-outlined">menu</span>
+            </label>
+        </div>
+    </header>
+
+    <nav id="mobile-menu" class="fixed inset-y-0 right-0 z-40 w-64 bg-background-light dark:bg-background-dark border-l border-black/10 dark:border-white/10 p-6 shadow-xl transform translate-x-full transition-transform duration-300 md:hidden">
+        <div class="flex flex-col gap-4 pt-12">
+            <a class="text-lg font-medium hover:text-accent transition duration-300" href="index.html">Home</a>
+            <a class="text-lg font-medium hover:text-accent transition duration-300" href="shop.html">Bouquets</a>
+            <a class="text-lg font-medium hover:text-accent transition duration-300" href="auth.html">Account</a>
+            <a class="text-lg font-medium hover:text-accent transition duration-300" href="orders.html">My Orders</a>
+            <a class="text-lg font-medium hover:text-accent transition duration-300" href="about.html">About</a>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto flex-grow px-6 md:px-10 lg:px-20 py-12 animate-fadeIn">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-serif font-bold tracking-[-0.033em] text-text-light dark:text-text-dark">Your Shopping Bag</h1>
+            <p class="mt-2 text-base font-normal leading-normal text-primary/80">Review your selections and place your order via WhatsApp for payment.</p>
+        </div>
+        
+        <div class="flex flex-col lg:flex-row gap-12">
+            
+            <section class="lg:w-2/3 space-y-6" id="cart-items-container">
+                <div class="text-center py-12 text-lg text-text-light/70 dark:text-text-dark/70" id="empty-cart-message">Your bag is empty. Add some beautiful flowers!</div>
+            </section>
+            
+            <aside class="lg:w-1/3 space-y-6">
+                <div class="bg-primary/10 dark:bg-background-dark/5 p-6 rounded-xl shadow-lg border border-primary/20">
+                    <h2 class="font-serif text-2xl font-bold mb-6 text-accent">Order Summary</h2>
+                    
+                    <div class="space-y-3 border-b border-black/10 dark:border-white/10 pb-4">
+                        <div class="flex justify-between text-base">
+                            <span>Subtotal (<span id="total-items">0</span> items)</span>
+                            <span class="font-medium">Rs. <span id="subtotal">0.00</span></span>
+                        </div>
+                        <div class="flex justify-between text-base">
+                            <span>Delivery Charge</span>
+                            <span class="font-medium">Rs. <span id="delivery-charge">100.00</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between text-xl font-bold pt-4 text-text-light dark:text-text-dark">
+                        <span>Order Total</span>
+                        <span>Rs. <span id="order-total">100.00</span></span>
+                    </div>
+                    
+                    <button id="whatsapp-order-btn" class="mt-8 flex w-full items-center justify-center rounded-full h-12 px-8 bg-green-500 text-white text-base font-bold leading-normal tracking-[0.015em] animate-cta transition duration-300 shadow-xl disabled:bg-gray-400" disabled>
+                        <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12c0 3.03 1.28 5.76 3.32 7.74l-.56 2.05 2.14-.56c.55.15 1.13.23 1.74.23 5.52 0 10-4.48 10-10S17.52 2 12 2zm4.18 13.92c-.2.5-.78.78-1.4.95-.62.17-1.4.26-2.22.26-1.7 0-3.32-.48-4.66-1.57-.27-.22-.53-.47-.76-.73-.23-.27-.42-.55-.57-.86-.15-.31-.22-.64-.22-.98 0-.3.07-.62.22-.93.15-.31.34-.59.57-.82.23-.23.49-.44.76-.64.27-.2.58-.33.93-.4.35-.07.74-.11 1.17-.11.43 0 .82.04 1.17.11.35.07.67.2.93.4.27.2.49.44.7.7.2.27.35.58.45.92.1.34.15.7.15 1.1 0 .4-.05.77-.15 1.1-.1.33-.25.64-.45.92z"/></svg>
+                        Place Order via WhatsApp
+                    </button>
+
+                    <a id="view-invoice-link" href="invoice.html" class="hidden w-full text-center mt-4 inline-block text-sm font-medium text-primary hover:text-accent transition duration-300">
+                        View Order Confirmation / Invoice
+                    </a>
+
+                </div>
+            </aside>
+        </div>
+    </main>
+    
+    <footer class="bg-black/5 dark:bg-white/5 text-text-light/80 dark:text-text-dark/80 px-6 md:px-10 lg:px-20 py-16 mt-16">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="md:col-span-2">
+                <h3 class="text-lg font-bold text-text-light dark:text-text-dark mb-4">Contact Us</h3>
+                <p class="text-sm mb-2">127 1/398, Near Nilgiris & Ganga Sweets, Rajiv Gandhi Salai, OMR, Navalur, Chennai 603 113</p>
+                <p class="text-sm mb-1">Phone: 044-35353222, +91 99400 25345</p>
+                <p class="text-sm">Email: sales@theflorist.co.in</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-text-light dark:text-text-dark mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a class="hover:text-primary transition duration-300" href="shop.html">Bouquets</a></li>
+                    <li><a class="hover:text-primary transition duration-300" href="auth.html">My Account</a></li>
+                    <li><a class="hover:text-primary transition duration-300" href="orders.html">Order History</a></li>
+                    <li><a class="hover:text-primary transition duration-300" href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-text-light dark:text-text-dark mb-4">Follow Us</h3>
+                <div class="flex items-center gap-4">
+                    <a class="hover:text-accent transition duration-300" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zM12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44c0-.795-.645-1.44-1.441-1.44z"/></svg></a>
+                    <a class="hover:text-accent transition duration-300" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg></a>
+                    <a class="hover:text-accent transition duration-300" href="#"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.298 1.634 4.212 3.793 4.649-.65.177-1.336.213-2.033.16.586 1.913 2.344 3.217 4.422 3.255-1.728 1.345-3.837 2.088-6.04 1.88-1.893.121-3.837-.404-5.553-1.254 2.116 1.345 4.649 2.132 7.373 2.132 8.771 0 13.59-7.277 13.59-13.59 0-.205-.005-.41-.013-.615.932-.67 1.733-1.512 2.37-2.459z"/></svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-xs mt-12 border-t border-black/10 dark:border-white/10 pt-8">
+            <p>© 2024 The Florist. All Rights Reserved. | Product subject to change as per availability.</p>
+        </div>
+    </footer>
+</div>
+
+<script>
+    const WHATSAPP_NUMBER = '919940025345'; // The Florist's WhatsApp number
+
+    const cartKey = 'theFloristCart';
+    const orderKey = 'theFloristLastOrder'; 
+
+    // MAPPING: Product ID-ku Etra Image URL-ai inga Define panniyachu
+    const productImageMap = {
+        'RR1500': 'https://images.unsplash.com/photo-1588698944589-d102047805ec?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Ravishing Red (Red Roses)
+        'PP750': 'https://images.unsplash.com/photo-1596707323145-207399ed65d5?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Pink Perfect (Pink Mix)
+        'CC500': 'https://images.unsplash.com/photo-1621379963212-07593c6df675?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Corporate Chic (White)
+        'C1750': 'https://images.unsplash.com/photo-1543888566-66385d883b27?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Celebrations (Chocolate)
+        'TLB750': 'https://images.unsplash.com/photo-1577977934279-b14e08c4a179?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Teddy Love (Teddy Bears)
+        'S250': 'https://images.unsplash.com/photo-1517457787313-0972b220364e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Sunburst (Gerberas/Orange)
+        // Add more product IDs and their corresponding image URLs here
+    };
+
+    function loadCart() {
+        try {
+            return JSON.parse(localStorage.getItem(cartKey)) || [];
+        } catch (e) {
+            console.error("Error loading cart from localStorage", e);
+            return [];
+        }
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+        renderCart();
+    }
+
+    function calculateTotals(cart) {
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const deliveryCharge = subtotal > 1000 ? 0 : 100; // Example: Free delivery over Rs. 1000
+        const total = subtotal + deliveryCharge;
+        return { subtotal, deliveryCharge, total, totalItems: cart.reduce((sum, item) => sum + item.quantity, 0) };
+    }
+
+    function renderCart() {
+        const cart = loadCart();
+        const container = document.getElementById('cart-items-container');
+        const emptyMessage = document.getElementById('empty-cart-message');
+        const whatsappBtn = document.getElementById('whatsapp-order-btn');
+        const totals = calculateTotals(cart);
+
+        document.getElementById('subtotal').textContent = totals.subtotal.toFixed(2);
+        document.getElementById('delivery-charge').textContent = totals.deliveryCharge.toFixed(2);
+        document.getElementById('order-total').textContent = totals.total.toFixed(2);
+        document.getElementById('total-items').textContent = totals.totalItems;
+
+        if (cart.length === 0) {
+            container.innerHTML = `<div class="text-center py-12 text-lg text-text-light/70 dark:text-text-dark/70">Your bag is empty. Add some beautiful flowers!</div>`;
+            whatsappBtn.disabled = true;
+            return;
+        }
+
+        whatsappBtn.disabled = false;
+        container.innerHTML = ''; 
+
+        cart.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'flex gap-4 border-b border-black/10 dark:border-white/10 pb-6 items-center hover:bg-primary/5 p-2 rounded-lg transition duration-300';
+            
+            // ✅ CORRECTION: Use the product ID to get the correct image URL
+            const imageUrl = productImageMap[item.id] || 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Default fallback image
+
+            itemElement.innerHTML = `
+                <a href="shop.html" class="flex-shrink-0 w-24 h-24 bg-cover bg-center rounded-lg shadow-md" 
+                    style='background-image: url("${imageUrl}");'></a>
+                
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-lg font-bold truncate">${item.name}</h3>
+                    <p class="text-sm text-accent mb-2">Rs. ${(item.price * item.quantity).toFixed(2)}</p>
+                    <p class="text-xs text-text-light/70 dark:text-text-dark/70">Price: Rs. ${item.price.toFixed(2)} each</p>
+                </div>
+                
+                <div class="flex items-center gap-4 flex-shrink-0">
+                    <div class="flex items-center border border-primary/50 rounded-full h-8">
+                        <button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-primary/10 rounded-l-full transition duration-300" data-id="${item.id}" data-action="decrement"><span class="material-symbols-outlined text-base">remove</span></button>
+                        <input type="text" value="${item.quantity}" class="w-10 text-center border-y-0 border-x border-primary/30 bg-transparent text-sm p-0 focus:ring-0 focus:border-primary/30" readonly/>
+                        <button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-primary/10 rounded-r-full transition duration-300" data-id="${item.id}" data-action="increment"><span class="material-symbols-outlined text-base">add</span></button>
+                    </div>
+                    
+                    <button class="text-text-light/50 dark:text-text-dark/50 hover:text-primary transition duration-300" data-id="${item.id}" data-action="remove">
+                        <span class="material-symbols-outlined text-xl">close</span>
+                    </button>
+                </div>
+            `;
+            container.appendChild(itemElement);
+        });
+
+        // Add event listeners for cart actions
+        container.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', handleCartAction);
+        });
+    }
+
+    function handleCartAction(event) {
+        const button = event.currentTarget;
+        const id = button.getAttribute('data-id');
+        const action = button.getAttribute('data-action');
+        let cart = loadCart();
+        const itemIndex = cart.findIndex(item => item.id === id);
+
+        if (itemIndex > -1) {
+            if (action === 'increment') {
+                cart[itemIndex].quantity += 1;
+            } else if (action === 'decrement') {
+                if (cart[itemIndex].quantity > 1) {
+                    cart[itemIndex].quantity -= 1;
+                } else {
+                    cart.splice(itemIndex, 1); // Remove if quantity hits 0
+                }
+            } else if (action === 'remove') {
+                cart.splice(itemIndex, 1);
+            }
+            saveCart(cart);
+        }
+    }
+
+    function generateWhatsAppOrder(cart, totals) {
+        const orderID = 'TF' + Math.floor(Math.random() * 100000);
+        const date = new Date().toLocaleDateString('en-IN');
+        
+        let message = `*The Florist - New Order Request*\n\n`;
+        message += `*Order ID:* ${orderID}\n`;
+        message += `*Date:* ${date}\n\n`;
+        message += `*--- Items (${totals.totalItems}) ---*\n`;
+
+        cart.forEach((item, index) => {
+            message += `${index + 1}. ${item.name} (Rs. ${item.price}) x ${item.quantity} = Rs. ${(item.price * item.quantity).toFixed(2)}\n`;
+        });
+
+        message += `\n*--- Summary ---*\n`;
+        message += `*Subtotal:* Rs. ${totals.subtotal.toFixed(2)}\n`;
+        message += `*Delivery:* Rs. ${totals.deliveryCharge.toFixed(2)} (${totals.deliveryCharge === 0 ? 'FREE' : 'Chargeable'})\n`;
+        message += `*TOTAL PAYABLE:* *Rs. ${totals.total.toFixed(2)}*\n\n`;
+        message += `*Customer Info:* (Name and Delivery Address here - *Please fill in this information*)\n\n`;
+        message += `Please share payment details (GPay/UPI) for Order ID: ${orderID}. Thank you!`;
+
+        // Save this order detail to local storage for the invoice/history page later
+        localStorage.setItem(orderKey, JSON.stringify({
+            orderID, 
+            date, 
+            items: cart, 
+            totals,
+            status: 'Pending Payment'
+        }));
+        
+        // Clear the cart after placing the order request
+        // saveCart([]); // Don't clear cart immediately here to allow invoice.html to read it first
+
+        return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+
+    document.getElementById('whatsapp-order-btn').addEventListener('click', () => {
+        const cart = loadCart();
+        if (cart.length === 0) return;
+        
+        const totals = calculateTotals(cart);
+        const whatsappURL = generateWhatsAppOrder(cart, totals);
+        
+        // After generating the URL and saving the order to storage, open WhatsApp
+        window.open(whatsappURL, '_blank');
+        
+        alert('Order request sent to WhatsApp! Check the new tab for your order details and payment request.');
+        
+        // Redirect to invoice.html
+        window.location.href = 'invoice.html';
+        
+        // NOTE: The cart clearing logic has been moved to after navigation/order generation 
+        // in a simplified scenario like this, but typically should happen server-side 
+        // after successful placement or confirmation. For this frontend flow, we rely on the redirect.
+    });
+
+    document.addEventListener('DOMContentLoaded', renderCart);
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-fadeIn').forEach(element => {
+            element.classList.remove('animate-fadeIn'); 
+            observer.observe(element);
+        });
+    });
+</script>
+
+
+<!-- Mobile Menu + Chatbot -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const btn = document.querySelector('[data-mobile-toggle]');
+  const menu = document.querySelector('[data-mobile-menu]');
+  if(btn && menu){
+    btn.addEventListener('click', ()=> menu.classList.toggle('hidden'));
+  }
+  // Chatbot
+  const botBtn = document.createElement('button');
+  botBtn.textContent="💬";
+  botBtn.style.cssText="position:fixed;bottom:20px;right:20px;padding:10px;border-radius:50%;background:#ff69b4;color:#fff;font-size:20px;z-index:9999;";
+  document.body.appendChild(botBtn);
+  const box=document.createElement('div');
+  box.style.cssText="position:fixed;bottom:80px;right:20px;width:280px;height:360px;background:#fff;border:1px solid #ddd;border-radius:10px;display:none;flex-direction:column;overflow:hidden;z-index:9999;";
+  box.innerHTML='<div style="background:#ff69b4;color:#fff;padding:8px;">Florist Assistant</div><div id="cb" style="flex:1;padding:8px;overflow:auto;font-size:14px;"></div><div style="padding:6px;display:flex;gap:4px;"><input id="ci" style="flex:1;border:1px solid #ccc;padding:4px;border-radius:6px;"><button id="cs" style="padding:4px 8px;background:#ff69b4;color:#fff;border:none;border-radius:6px;">Send</button></div>';
+  document.body.appendChild(box);
+  botBtn.onclick=()=> box.style.display= box.style.display==="none"?"flex":"none";
+  function reply(t){document.getElementById("cb").innerHTML+=`<div style="margin:4px 0;color:#555;">${t}</div>`;}
+  document.getElementById("cs")?.addEventListener("click", ()=>{
+    let v=document.getElementById("ci").value.trim(); if(!v)return;
+    reply("You: "+v); document.getElementById("ci").value="";
+    reply("Bot: Thanks for reaching out! We’ll help you with bouquets, deliveries, and custom floral arrangements 🌸");
+  });
+});
+</script>
+
+</body>
+</html>
